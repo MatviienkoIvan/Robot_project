@@ -7,25 +7,20 @@ document.addEventListener('DOMContentLoaded', function(){
             this.picture = $("<img id='" + this.pictureID + "' src=2.png>");
 			this.topValue = 0;
 			this.leftValue = 0;
-			this.rightValue = document.documentElement.clientWidth;
-			this.bottomValue = document.documentElement.clientHeight;
             this.fildWidth = parameters.width;
             this.fildHeight = parameters.height;
+            this.nextValue = 0;
             $('body').append(this.picture).css({top: 4.5, left:4.5, position: "absolute" });
 		}		
 		def(){
 			this.topValue = 0;
 			this.leftValue = 0;
 		}
-		/*centre(){		
-			this.topValue = (this.bottomValue - this.element.clientHeight) / 2;
-			this.leftValue = (this.rightValue - this.element.clientWidth) / 2;
-		}*/
 		forward(){
-            let nextValue = this.topValue - 1;
-			if(nextValue >= 0){
-                if(this.area[nextValue][this.leftValue] == 1){                    
-                    this.topValue = nextValue >= 0 ? nextValue : this.topValue;	
+            this.nextValue = this.topValue - 1;
+			if(this.nextValue >= 0){
+                if(this.area[this.nextValue][this.leftValue] == 1){                    
+                    this.topValue = this.nextValue >= 0 ? this.nextValue : this.topValue;	
                 }else{
                     alert("you can not move to this way");
                 }
@@ -34,10 +29,10 @@ document.addEventListener('DOMContentLoaded', function(){
                 }
 		}
 		back(){
-            let nextValue = this.topValue + 1;
-            if( nextValue < this.area.length){
-                if(this.area[nextValue][this.leftValue] == 1){
-                    this.topValue = nextValue < (this.area.length) ? nextValue : this.topValue;
+            this.nextValue = this.topValue + 1;
+            if( this.nextValue < this.area.length){
+                if(this.area[this.nextValue][this.leftValue] == 1){
+                    this.topValue = this.nextValue < (this.area.length) ? this.nextValue : this.topValue;
                 }else{
                     alert("you can not move to this way");
                 }
@@ -46,10 +41,10 @@ document.addEventListener('DOMContentLoaded', function(){
                 }                
 		}
 		right(){		
-			let nextValue = this.leftValue +1;
-            if(this.area[this.topValue][nextValue] == 1){                
-                this.leftValue = nextValue < (this.area[this.topValue].length) ? nextValue : this.leftValue;
-            }else if(nextValue > (this.area[this.topValue].length-1) && this.area[this.topValue][nextValue-1] == 1){                
+			this.nextValue = this.leftValue +1;
+            if(this.area[this.topValue][this.nextValue] == 1){                
+                this.leftValue = this.nextValue < (this.area[this.topValue].length) ? this.nextValue : this.leftValue;
+            }else if(this.nextValue > (this.area[this.topValue].length-1) && this.area[this.topValue][this.nextValue-1] == 1){                
                 alert("You find exit. Congratulation");
             }
             else{
@@ -57,9 +52,9 @@ document.addEventListener('DOMContentLoaded', function(){
             }
         }
 		left(){
-			let nextValue = this.leftValue -1;
-            if(this.area[this.topValue][nextValue] == 1){
-                this.leftValue = nextValue >= 0 ? nextValue : this.leftValue;
+			this.nextValue = this.leftValue -1;
+            if(this.area[this.topValue][this.nextValue] == 1){
+                this.leftValue = this.nextValue >= 0 ? this.nextValue : this.leftValue;
             }else{
                 alert("you can not move to this way");
             }
@@ -86,12 +81,9 @@ document.addEventListener('DOMContentLoaded', function(){
 				case 40:			
 					instance.back();
 					break;
-				/*case 32:
-					instance.centre();;
-					break;
 				case 27:
 					instance.def();
-					break;*/
+					break;
 			}
 			instance.render();
 		}
